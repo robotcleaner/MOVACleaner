@@ -193,7 +193,13 @@
         async function loadKnowledgeBase() {
             const product = document.getElementById('product').value;
             const language = document.getElementById('language').value;
-            const knowledgeBaseUrl = `https://robotcleaner.github.io/mova-folder/MOVA-Robot_Vacuum_Cleaner_en.json`;
+            const knowledgeBaseUrl = {
+                "Robot Vacuum Cleaner": `https://robotcleaner.github.io/mova-folder/Robot_Vacuum_Cleaner_en.json`,
+                "Floor Scrubber": `https://robotcleaner.github.io/dreame-folder/Wet and Dry vacuum_en.json`,
+                "Vacuum Cleaner": `https://example.com/vacuum_cleaner_${language}.json`
+            };
+
+            const knowledgeBaseUrl = knowledgeBaseUrls[product];
 
             try {
                 const response = await fetch(knowledgeBaseUrl);
