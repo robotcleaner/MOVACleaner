@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge Base Search</title>
-     <link rel="icon" type="image/png" href="/MOVACleaner/favicon.png">
+    <link rel="icon" type="image/png" href="/dreame/favicon.png">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8GSV4C9YR7"></script>
     <script>
@@ -181,11 +182,11 @@
                 noResults: "결과를 찾을 수 없습니다. 다른 키워드를 시도해 주세요."
             },
             ja: {
-                pageTitle: "ナレッジベース 검색",
+                pageTitle: "ナレッジベース検索",
                 productLabel: "製品を選択:",
-                searchButton: "검索",
-                searchPlaceholder: "キーワードを入力してください...",
-                noResults: "결과が見つかりません。別のキーワードをお試しください。"
+                searchButton: "검색",
+                searchPlaceholder: "キーワードを 입력してください...",
+                noResults: "結果が見つかりません。別のキーワードをお試しください。"
             }
         };
 
@@ -193,9 +194,11 @@
         async function loadKnowledgeBase() {
             const product = document.getElementById('product').value;
             const language = document.getElementById('language').value;
-            const knowledgeBaseUrl = {
+
+            // Here you can specify the JSON file links for each product
+            const knowledgeBaseUrls = {
                 "Robot Vacuum Cleaner": `https://robotcleaner.github.io/mova-folder/Robot_Vacuum_Cleaner_en.json`,
-                "Floor Scrubber": `https://robotcleaner.github.io/dreame-folder/Wet and Dry vacuum_en.json`,
+                "Floor Scrubber": `https://robotcleaner.github.io/mova-folder/Wet and Dry vacuum_en.json`,
                 "Vacuum Cleaner": `https://example.com/vacuum_cleaner_${language}.json`
             };
 
@@ -290,6 +293,39 @@
             document.getElementById('searchBox').placeholder = texts.searchPlaceholder;
             loadKnowledgeBase();
         }
+
+        // Disable Right-Click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            alert('Right-click is disabled.');
+        });
+
+        // Disable Developer Tools Shortcuts
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                alert('Developer tools are disabled.');
+            }
+        });
+
+        // Detect Developer Tools
+        (function () {
+            let devtoolsOpen = false;
+
+            function checkDevTools() {
+                const threshold = 160;
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+                if ((widthThreshold || heightThreshold) && !devtoolsOpen) {
+                    devtoolsOpen = true;
+                    alert('Developer tools detected. Page will refresh.');
+                    window.location.reload();
+                }
+            }
+
+            setInterval(checkDevTools, 1000);
+        })();
     </script>
 </body>
 
